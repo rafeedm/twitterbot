@@ -35,9 +35,6 @@ def setlastid(lastid, filename):
     return
 
 
-# mentions = twtapi.mentions_timeline()
-# for mention in mentions:
-#     print(mention.user.location + str(mention.id))
 def removeSpace(string):
     return string.replace(" ", "")
 
@@ -70,6 +67,5 @@ def getWeather(location):
 # Infinite loop to keep running response function
 while True:
     responding()
-    time.sleep(2)
+    time.sleep(5)
 
-# first tweet id 1257245081075056640
