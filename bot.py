@@ -21,11 +21,17 @@ wapi_url_end = '&appid=' + os.getenv("WEATHER_KEY")
 FILENAME = 'last_id.txt'
 
 
+# function to get id from text file
+
+
 def getlastid(filename):
     readfile = open(filename, 'r')
     lastid = int(readfile.read().strip())
     readfile.close()
-    return
+    return lastid
+
+
+# function to write last id into file
 
 
 def setlastid(lastid, filename):
@@ -35,8 +41,26 @@ def setlastid(lastid, filename):
     return
 
 
+# function to remove spaces in strings
+
+
 def removeSpace(string):
     return string.replace(" ", "")
+
+
+# function to fetch weather data
+
+
+def getWeather(location):
+    wapi = wapi_url + removeSpace(location) + wapi_url_end
+    response = requests.get(wapi)
+    dicts = response.json()
+    maindata = dicts["main"]
+    temp = maindata["temp"] - 273.15
+    return temp
+
+
+# function to reply to mentions
 
 
 def responding():
@@ -51,21 +75,10 @@ def responding():
         setlastid(lastid, FILENAME)
         if 'good morning' in mention.text.lower():
             twtapi.update_status(
-                '@' + mention.user.screen_name + ' Good Morning ' + mention.user.name + '! The current temperature in ' + mention.user.location + ' is ' + str(int(getWeather(mention.user.location))) + ' degrees', mention.id)
-
-
-def getWeather(location):
-    wapi = wapi_url + removeSpace(location) + wapi_url_end
-    response = requests.get(wapi)
-    dicts = response.json()
-    maindata = dicts["main"]
-    temp = maindata["temp"] - 273.15
-
-    return temp
+                '@' + mention.user.screen_name + ' Good Morning ' + mention.user.name + '! The current temperature in ' + mention.user.location + ' is ' + str(int(getWeather(mention.user.location))) + ' degrees.', mention.id)
 
 
 # Infinite loop to keep running response function
 while True:
     responding()
     time.sleep(5)
-
