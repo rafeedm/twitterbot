@@ -1,6 +1,6 @@
 # Twitter weather bot
 
-When someone @'s the bot (@rafeedsbot) saying "Good Morning" the bot replies with the weather in the user's location (from user's bio).
+When someone @'s the bot (@rafeedsbot) saying "Good Morning" the bot replies with the weather at the user's location (from user's bio).
 
 ## Built with
 
